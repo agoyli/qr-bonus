@@ -1,0 +1,16 @@
+<ul class="nav nav-tabs">
+    <li {% if
+            app.request.get('_route') == 'fos_user_profile_show' or
+            app.request.get('_route') == 'fos_user_profile_edit'
+        %}class="active"{% endif %}>
+        <a href="{{ path('fos_user_profile_show') }}">
+            {{ 'Profile'|trans([], 'FOSUserBundle') }}
+        </a>
+    </li>
+    <li {% if app.request.get('_route') == 'fos_user_change_password'
+        %}class="active"{% endif %}>
+        <a href="{{ path('fos_user_change_password') }}">
+            {{ 'change_password.submit'|trans([], 'FOSUserBundle') }}
+        </a>
+    </li>
+</ul>

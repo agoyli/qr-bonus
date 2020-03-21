@@ -1,0 +1,76 @@
+{% set _title = title is defined ? title : '' %}
+{% set _body_attr = body_attr is defined ? body_attr : '' %}
+
+<!DOCTYPE html>
+<html {% block html_attributes %}class="no-js"{% endblock %}>
+<head>
+    {% block meta_tags %}
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta charset="UTF-8">
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    {% endblock %}
+
+    <meta data-sonata-admin='{{ {
+        config: {
+            CONFIRM_EXIT: sonata_admin.adminPool.getOption('confirm_exit'),
+            USE_SELECT2: sonata_admin.adminPool.getOption('use_select2'),
+            USE_ICHECK: sonata_admin.adminPool.getOption('use_icheck'),
+            USE_STICKYFORMS: sonata_admin.adminPool.getOption('use_stickyforms'),
+            DEBUG: sonata_admin.adminPool.getOption('js_debug'),
+        },
+        translations: {
+            CONFIRM_EXIT: 'confirm_exit'|trans({}, 'SonataAdminBundle'),
+        },
+    }|json_encode()|raw }}'
+    >
+
+    {% block stylesheets %}
+        {% for stylesheet in sonata_admin.adminPool.getOption('stylesheets', []) %}
+            <link rel="stylesheet" href="{{ asset(stylesheet) }}">
+        {% endfor %}
+    {% endblock %}
+
+    {% block javascripts %}
+        {% block sonata_javascript_config %}
+        {% endblock %}
+
+    {% block sonata_javascript_pool %}
+        {% for javascript in sonata_admin.adminPool.getOption('javascripts', []) %}
+        <script src="{{ asset(javascript) }}"></script>
+        {% endfor %}
+    {% endblock %}
+
+        {# localize moment #}
+        {% set localeForMoment = canonicalize_locale_for_moment() %}
+        {% if localeForMoment %}
+        <script src="{{ asset(
+            'bundles/sonatacore/vendor/moment/locale/' ~
+            localeForMoment ~
+            '.js'
+        ) }}"></script>
+        {% endif %}
+
+        {# localize select2 #}
+        {% if sonata_admin.adminPool.getOption('use_select2') %}
+        {% set localeForSelect2 = canonicalize_locale_for_select2() %}
+        {% if localeForSelect2 %}
+        <script src="{{ asset('bundles/sonatacore/vendor/select2/select2_locale_' ~ localeForSelect2 ~ '.js') }}"></script>
+        {% endif %}
+        {% endif %}
+    {% endblock %}
+    <title>{{ _title }}</title>
+</head>
+<body {{ _body_attr|raw }}>
+{% block body %}
+{% endblock %}
+
+{% if sonata_admin.adminPool.getOption('use_bootlint') %}
+    {% block bootlint %}
+        {# Bootlint - https://github.com/twbs/bootlint#in-the-browser #}
+        <script type="text/javascript">
+            javascript:(function(){var s=document.createElement("script");s.onload=function(){bootlint.showLintReportForCurrentDocument([], {hasProblems: false, problemFree: false});};s.src="https://maxcdn.bootstrapcdn.com/bootlint/latest/bootlint.min.js";document.body.appendChild(s)})();
+        </script>
+    {% endblock %}
+{% endif %}
+</body>
+</html>

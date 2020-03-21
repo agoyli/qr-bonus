@@ -1,0 +1,46 @@
+{% extends '@Admin/base.html.twig' %}
+
+{% macro single_field(label, value) %}
+    <div class="form-group">
+        <label class="col-sm-2 control-label">{{ label }}</label>
+        <div class="col-sm-10">
+            <input value="{{ value }}" class="form-control" disabled="disabled">
+        </div>
+    </div>
+{% endmacro %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Profile Image -->
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                    <h3 class="profile-username text-center">
+                        @{{ app.user.username }}
+                    </h3>
+                    <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary btn-block">
+                        <i class="fa fa-edit"></i>
+                        {{ 'link_edit'|trans([], 'SonataAdminBundle') }}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+            <div class="nav-tabs-custom">
+                {% include '@Admin/user/profile/_navbar.html.twig' %}
+                <div class="tab-content">
+                    <div class="tab-pane active" id="profile">
+                        <form class="form-horizontal">
+                            {{ _self.single_field('Username', app.user.username) }}
+                            {{ _self.single_field('Email', app.user.email) }}
+                        </form>
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+        </div>
+    </div>
+{% endblock %}

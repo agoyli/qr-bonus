@@ -1,0 +1,9 @@
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+fos_user:
+    resource: '@AppBundle/Resources/config/routing/fos_user.yaml'
+
+sonata_admin:
+    resource: '@AdminBundle/Resources/config/routing/sonata_admin.yaml'

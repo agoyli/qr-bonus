@@ -1,0 +1,29 @@
+sonata_admin:
+  title: 'Simple site'
+  options:
+    title_mode: 'single_text'
+  show_mosaic_button: false
+  templates:
+    layout: '@Admin/base.html.twig'
+    dashboard: '@Admin/dashboard/index.html.twig'
+    user_block: '@Admin/partials/user_block.html.twig'
+  dashboard:
+    blocks:
+  assets:
+    stylesheets:
+      - bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css
+      - bundles/sonatacore/vendor/components-font-awesome/css/font-awesome.min.css
+      - bundles/sonatacore/vendor/ionicons/css/ionicons.min.css
+      - bundles/sonataadmin/vendor/admin-lte/dist/css/AdminLTE.min.css
+      - bundles/sonataadmin/vendor/admin-lte/dist/css/skins/skin-blue.min.css
+      - bundles/sonataadmin/vendor/iCheck/skins/square/blue.css
+      - bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css
+      - bundles/sonataadmin/vendor/jqueryui/themes/base/jquery-ui.css
+      - bundles/sonatacore/vendor/select2/select2.css
+      - bundles/sonatacore/vendor/select2-bootstrap-css/select2-bootstrap.min.css
+      - bundles/sonataadmin/vendor/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css
+      - bundles/sonataadmin/css/styles.css
+      - bundles/sonataadmin/css/layout.css
+      - bundles/sonataadmin/css/tree.css
+      #- bundles/sonataadmin/css/colors.css
+    extra_javascripts:

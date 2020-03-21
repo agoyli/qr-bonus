@@ -1,0 +1,33 @@
+services:
+  admin_user_search_admin:
+    class: AdminBundle\Admin\UserSearchAdmin
+    arguments: [~, ~, AdminBundle\Controller\Admin\UserSearchCRUDController]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        label: 'User search'
+        group: 'User search'
+        on_top: true
+        icon: '<i class="fa fa-search"></i>'
+
+  admin_user_admin:
+    class: AdminBundle\Admin\UserAdmin
+    arguments: [~, AppBundle\Entity\User, ~]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        label: Users
+        group: Users
+        on_top: true
+        icon: '<i class="fa fa-users"></i>'
+
+  admin_item_admin:
+    class: AdminBundle\Admin\ItemAdmin
+    arguments: [~, AppBundle\Entity\Item, ~]
+    tags:
+      - name: sonata.admin
+        manager_type: orm
+        label: Items
+        group: Items
+        on_top: true
+        show_in_dashboard: false
