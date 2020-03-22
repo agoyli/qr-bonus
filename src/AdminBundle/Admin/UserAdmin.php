@@ -4,6 +4,7 @@
 namespace AdminBundle\Admin;
 
 
+use AdminBundle\Form\Type\UserQRCodeFormType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -28,6 +29,7 @@ class UserAdmin extends AbstractAdmin
         ]);
         $form->add('enabled');
         $form->add('plainPassword', PasswordType::class);
+        $form->add('qrCodeData', UserQRCodeFormType::class, ['label' => 'QR code']);
         $form->add('items', CollectionType::class, [
         ], [
             'edit' => 'inline',

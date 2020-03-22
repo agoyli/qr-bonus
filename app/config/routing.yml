@@ -2,6 +2,10 @@ app:
     resource: '@AppBundle/Controller/'
     type: annotation
 
+qr_code:
+    resource: "@EndroidQrCodeBundle/Resources/config/routes.yaml"
+    prefix: /qr-code/generator
+
 fos_user:
     resource: '@AppBundle/Resources/config/routing/fos_user.yaml'
 

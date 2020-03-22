@@ -2,55 +2,80 @@
 {% set title = 'User search' %}
 
 {% block content %}
-    <div class="box box-primary">
-        <div class="box-header">
-            <div class="box-title">Search with QR code</div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <div class="box-title">Scan result</div>
+                </div>
+                <div class="box-body no-padding">
+                    <table class="table">
+                        <thead>
+                            <th>Username</th>
+                            <th>Fullname</th>
+                            <th>Bonus</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Admin</td>
+                            <td>Administrator</td>
+                            <td>0</td>
+                            <td><a href="" class="btn btn-primary"><i class="fa fa-edit"></i>Edit</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="box-body">
-            <script type="text/javascript"  src="{{ asset('bundles/admin/libs/instascan/instascan.min.js') }}"></script>
-            <video id="instascancam" style="transform: scaleX(-1);width: 100%;"></video>
-            <script type="text/javascript">
-                function validURL(str) {
-                    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-                        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-                        '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-                        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-                        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-                        '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-                    return !!pattern.test(str);
-                }
-                let scanner = new Instascan.Scanner({ video: document.getElementById('instascancam') });
-                scanner.addListener('scan', function (content) {
-                    if (validURL(content)) {
-                        window.location.href = content;
-                        $("#scanner_result_table").append(
-                            "<tr>" +
-                            "<td>" +
-                            "<a class='btn btn-primary' href='"+content+"' target='_blank'>"+content+"</a>" +
-                            "</td>"+
-                            "</tr>"
-                        );
-                    }
-                });
-                Instascan.Camera.getCameras().then(function (cameras) {
-                    if (cameras.length > 0) {
-                        for (var i = 0; i < cameras.length; i++) {
-                            $("#scanner_cameras").append(
-                                "<tr>" +
-                                "<td>" +
-                                "<a class='btn btn-primary' href='javascript:void(0)' data-key='"+i+"'>"+cameras[i].name+"</a>" +
-                                "</td>" +
-                                "</tr>"
-                            );
-                        }
-                        scanner.start(cameras[cameras.length-1]);
-                    } else {
-                        console.error('No cameras found.');
-                    }
-                }).catch(function (e) {
-                    console.error(e);
-                });
-            </script>
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <div class="box-title">QR code camera</div>
+                </div>
+                <div class="box-body">
+                    <script type="text/javascript"  src="{{ asset('bundles/admin/libs/instascan/instascan.min.js') }}"></script>
+                    <video id="instascancam" style="transform: scaleX(-1);width: 100%;"></video>
+                    <script type="text/javascript">
+                        let scanner = new Instascan.Scanner({ video: document.getElementById('instascancam') });
+                        scanner.addListener('scan', function (content) {
+                            console.log(content);
+                            try {
+                                data = JSON.parse(content);
+                                $("#scanner_result_table").append(
+                                    "<tr>" + data.username + "</td>" +
+                                    "<td>" + data.fullname + "</td>" +
+                                    "<td>" + data.bonus + "</td>" +
+                                    "<td>" +
+                                    "<a class='btn btn-primary' href='"+data.url+"' target='_blank'><i class='fa fa-edit'></i> Edit</a>" +
+                                    "</td>"+
+                                    "</tr>"
+                                );
+                            } catch (e) {
+                                console.log('Unable parse json');
+                            }
+                        });
+                        Instascan.Camera.getCameras().then(function (cameras) {
+                            if (cameras.length > 0) {
+                                for (var i = 0; i < cameras.length; i++) {
+                                    $("#scanner_cameras").append(
+                                        "<tr>" +
+                                        "<td>" +
+                                        "<a class='btn btn-primary' href='javascript:void(0)' data-key='"+i+"'>"+cameras[i].name+"</a>" +
+                                        "</td>" +
+                                        "</tr>"
+                                    );
+                                }
+                                scanner.start(cameras[cameras.length-1]);
+                            } else {
+                                console.error('No cameras found.');
+                            }
+                        }).catch(function (e) {
+                            console.error(e);
+                        });
+                    </script>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

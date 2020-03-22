@@ -6,6 +6,7 @@ imports:
     - { resource: packages/sonata_admin.yaml }
     - { resource: packages/sonata_block.yaml }
     - { resource: packages/sonata_media.yaml }
+    - { resource: packages/endroid_qr_code.yaml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -41,6 +42,7 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    form_themes: ['bootstrap_3_horizontal_layout.html.twig', 'form/user_qr_code_widget.html.twig']
 
 # Doctrine Configuration
 doctrine:
