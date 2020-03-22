@@ -9,7 +9,7 @@
                     <div class="box-title">Scan result</div>
                 </div>
                 <div class="box-body no-padding">
-                    <table class="table">
+                    <table class="table" id="scanner_result_table">
                         <thead>
                             <th>Username</th>
                             <th>Fullname</th>
@@ -17,12 +17,6 @@
                             <th></th>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Admin</td>
-                            <td>Administrator</td>
-                            <td>0</td>
-                            <td><a href="" class="btn btn-primary"><i class="fa fa-edit"></i>Edit</a></td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -42,15 +36,17 @@
                             console.log(content);
                             try {
                                 data = JSON.parse(content);
-                                $("#scanner_result_table").append(
-                                    "<tr>" + data.username + "</td>" +
-                                    "<td>" + data.fullname + "</td>" +
-                                    "<td>" + data.bonus + "</td>" +
-                                    "<td>" +
-                                    "<a class='btn btn-primary' href='"+data.url+"' target='_blank'><i class='fa fa-edit'></i> Edit</a>" +
-                                    "</td>"+
-                                    "</tr>"
-                                );
+                                $.post(window.location.href, {'user_id':data.id}, function (data) {
+                                    $("#scanner_result_table tbody").append(
+                                        "<tr>" + data.username + "</td>" +
+                                        "<td>" + data.fullname + "</td>" +
+                                        "<td>" + data.bonus + "</td>" +
+                                        "<td>" +
+                                        "<a class='btn btn-primary' href='"+data.url+"' target='_blank'><i class='fa fa-edit'></i> Edit</a>" +
+                                        "</td>"+
+                                        "</tr>"
+                                    );
+                                });
                             } catch (e) {
                                 console.log('Unable parse json');
                             }
