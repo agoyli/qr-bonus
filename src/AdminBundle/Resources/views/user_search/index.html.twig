@@ -37,15 +37,20 @@
                             try {
                                 data = JSON.parse(content);
                                 $.post(window.location.href, {'user_id':data.id}, function (data) {
-                                    $("#scanner_result_table tbody").append(
-                                        "<tr>" + data.username + "</td>" +
-                                        "<td>" + data.fullname + "</td>" +
-                                        "<td>" + data.bonus + "</td>" +
-                                        "<td>" +
-                                        "<a class='btn btn-primary' href='"+data.url+"' target='_blank'><i class='fa fa-edit'></i> Edit</a>" +
-                                        "</td>"+
-                                        "</tr>"
-                                    );
+                                    try {
+                                        $("#scanner_result_table tbody").append(
+                                            "<tr>" +
+                                                "<td>"+ data.username + "</td>" +
+                                                "<td>" + data.fullname + "</td>" +
+                                                "<td>" + data.bonus + "</td>" +
+                                                "<td>" +
+                                                    "<a class='btn btn-primary' href='"+data.url+"' target='_blank'><i class='fa fa-edit'></i> Edit</a>" +
+                                                "</td>"+
+                                            "</tr>"
+                                        );
+                                    } catch (e) {
+                                        console.log('Unable parse json');
+                                    }
                                 });
                             } catch (e) {
                                 console.log('Unable parse json');
